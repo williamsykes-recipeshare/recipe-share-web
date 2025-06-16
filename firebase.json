@@ -1,0 +1,26 @@
+{
+  "hosting": [
+    {
+      "site": "recipeshare-williamsykes",
+      "public": "dist",
+      "ignore": [
+        "firebase.json",
+        "**/.*",
+        "**/node_modules/**"
+      ],
+      "headers": [{
+        "source": "**/*.@(png|svg|js)",
+        "headers": [ {
+          "key": "Cache-Control",
+          "value": "max-age=31536000"
+        } ]
+      }],
+      "rewrites": [
+        {
+          "source": "**",
+          "destination": "/index.html"
+        }
+      ]
+    }
+  ]
+}

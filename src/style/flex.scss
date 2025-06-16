@@ -1,0 +1,71 @@
+/* Flexbox */
+
+.flx1 { display: flex !important; flex: 1 !important; }
+.flx2 { display: flex !important; flex: 2 !important; }
+.flx3 { display: flex !important; flex: 3 !important; }
+.flx4 { display: flex !important; flex: 4 !important; }
+.flx5 { display: flex !important; flex: 4 !important; }
+
+.fdr {
+    display: flex !important;
+    flex-direction: row !important;
+    min-width: 0 !important;
+}
+
+.fdc {
+    display: flex !important;
+    flex-direction: column !important;
+}
+
+.aic {
+    align-items: center;
+}
+
+.ais {
+    align-items: stretch;
+}
+
+.aifs {
+    align-items: flex-start;
+}
+
+.aife {
+    align-items: flex-end;
+}
+
+.jcc {
+    justify-content: center;
+}
+
+.jcfs {
+    justify-content: flex-start;
+}
+
+.jcfe {
+    justify-content: flex-end;
+}
+
+.jcsb {
+    justify-content: space-between;
+}
+
+.jcsa {
+    justify-content: space-around;
+}
+
+.fww {
+    flex-wrap: wrap;
+}
+
+/* COLUMS */
+.fcg10 { column-gap: 10px; }
+.fcg15 { column-gap: 15px; }
+.fcg20 { column-gap: 20px; }
+.fcg40 { column-gap: 40px; }
+
+/* ROWS */
+.frg10 { row-gap: 10px; }
+.frg15 { row-gap: 15px; }
+
+.tas { text-align: start; }
+.tac { text-align: center; }

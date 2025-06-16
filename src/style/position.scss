@@ -1,0 +1,32 @@
+.posa {
+    position: absolute;
+}
+
+.posr {
+    position: relative;
+}
+
+/* TOP */
+.topn10 { top: -10px; }
+.top16 { top: 16px; }
+
+/* BOTTOM */
+.bottom0 { bottom: 0px; }
+.bottom25 { bottom: 25px; }
+
+/* LEFT */
+.left40 { left: 40px; }
+
+/* RIGHT */
+.right0 { right: 0px; }
+
+/* Z-INDEX */
+.zin1 {
+    z-index: -1;
+}
+.zi1 {
+    z-index: 1;
+}
+.zi2 {
+    z-index: 2;
+}
