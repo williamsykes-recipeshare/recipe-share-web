@@ -36,7 +36,7 @@ const PublicDashboard = () : JSX.Element => {
             {
                 isLoadingRecipes ? <Loading /> :
                     <div className={'fdc w500'}>
-                        <div className={'flx1 wfill'}>
+                        <div className={'flx1 wfill mt20 mb20'}>
                             <DebouncedSearchInput
                                 searchText={searchText}
                                 setSearchText={setSearchText}
@@ -47,20 +47,23 @@ const PublicDashboard = () : JSX.Element => {
                             filteredRecipes.map(x => {
                                 return (
                                     <div key={x.guid} className={'fdc'}>
-                                        <Typography>{x.name}</Typography>
-                                        <div className={'fdr pl10'}>
+                                        <Typography variant={'bold'} fontSize={22}>{x.name}</Typography>
+                                        <div className={'fdr mb10'}>
                                             {
                                                 x.recipeDietaryTags?.map((y, index) => {
                                                     return (
                                                         <Typography
-                                                            key={`${x.guid}-${y.dietaryTag?.guid}`}>
-                                                            {`${y.dietaryTag?.name}${index !== (x.recipeDietaryTags?.length ?? 0) - 1 ? ', ' : ''}`}
+                                                            key={`${x.guid}-${y.dietaryTag?.guid}`}
+                                                            variant={'italic'}
+                                                            fontSize={14}>
+                                                            {y.dietaryTag?.name}{index !== (x.recipeDietaryTags?.length ?? 0) - 1 ? ',' : ''}&nbsp;
                                                         </Typography>
                                                     );
                                                 })
                                             }
                                         </div>
-                                        <ul>
+                                        <Typography variant={'bold'} fontSize={18}>Ingredients:</Typography>
+                                        <ul className={'m0 mb10'}>
                                             {
                                                 x.recipeIngredients?.map(y => {
                                                     return (
@@ -71,7 +74,8 @@ const PublicDashboard = () : JSX.Element => {
                                                 })
                                             }
                                         </ul>
-                                        <ol>
+                                        <Typography variant={'bold'} fontSize={18}>Instructions:</Typography>
+                                        <ol className={'m0 mb20'}>
                                             {
                                                 x.steps?.map(y => {
                                                     return (
