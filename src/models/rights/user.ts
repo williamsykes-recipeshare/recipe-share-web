@@ -1,14 +1,13 @@
 import { AnyObject, ObjectSchema } from 'yup';
 import { Yup, YupSchema } from '../../services/helper/yup';
 import { IBase } from '../base';
-import { IRole } from './role';
 import { IUserRight } from './userRight';
 import { v4 } from 'uuid';
+import { EnumUserRole } from './enum';
 
 export interface IUser extends IBase {
     guid : string;
-    roleId : number | null;
-    role : IRole | null;
+    role : EnumUserRole;
     name : string;
     email : string;
     lastLogin : string | null;
@@ -25,7 +24,7 @@ export interface ILoginFormValue {
 export interface IUserFormValue {
     id : number;
     guid : string;
-    roleId : number | null;
+    role : EnumUserRole;
     name : string;
     email : string;
     rightIds : Array<number>;
@@ -67,7 +66,7 @@ export default class UserHelper {
         return {
             id: user?.id ?? 0,
             guid: user?.guid ?? v4(),
-            roleId: user?.roleId ?? null,
+            role: user?.role ?? EnumUserRole.User,
             name: user?.name ?? '',
             email: user?.email ?? '',
             rightIds: user?.userRights?.filter(x => x.isActive).map(x => x.rightId) ?? [],
@@ -106,7 +105,7 @@ export default class UserHelper {
         .object<YupUserShape, YupUserShape>({
             id: Yup.number().required('Required'),
             guid: Yup.string().required('Required'),
-            roleId: Yup.number().nullable().required('Required'),
+            role: Yup.number().nullable().required('Required'),
             name: Yup.string().required('Required'),
             email: Yup.string().nullable().email('Invalid email').required('Required'),
             rightIds: Yup.array<AnyObject, number>().required('Required'),

@@ -15,7 +15,6 @@ const ErrorPage = (props : IErrorPageProps) : JSX.Element => {
     } = props;
 
     const onBackClick = useCallback(() => {
-        // TODO: this doesn't do anything most of the time, rather just navigate explicitly back to home
         window.history.back();
         window.location.reload();
     }, []);

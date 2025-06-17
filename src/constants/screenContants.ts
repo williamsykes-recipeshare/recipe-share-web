@@ -1,0 +1,1 @@
+export const max650Width = '@media screen and (max-width: 650px)';

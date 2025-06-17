@@ -1,8 +1,14 @@
-import { rightRightApi } from '../../hooks/query/right/right';
+import { recipeApi } from '../../hooks/query/recipe/recipe';
+import { rightApi } from '../../hooks/query/right/right';
 import { rightUserApi } from '../../hooks/query/right/user';
 
 export const rightReducer = {
-    // Add the generated reducer as a specific top-level slice
+    // Rights
     [rightUserApi.reducerPath]: rightUserApi.reducer,
-    [rightRightApi.reducerPath]: rightRightApi.reducer,
+    [rightApi.reducerPath]: rightApi.reducer,
+
+    // Recipes
+    [recipeApi.reducerPath]: recipeApi.reducer,
+
+    // Master Data
 };
