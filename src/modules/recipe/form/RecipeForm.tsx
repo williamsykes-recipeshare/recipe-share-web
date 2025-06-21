@@ -101,7 +101,7 @@ const RecipeForm = (props : IRecipeFormProps) : React.ReactElement => {
                             <FormDietaryTagAutocomplete
                                 id={'recipeDietaryTags'}
                                 name={'dietaryTagIds'}
-                                label={'DIetary Tag'}
+                                label={'Dietary Tag'}
                                 fullWidth
                                 size={'small'}
                             />
