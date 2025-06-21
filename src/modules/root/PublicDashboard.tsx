@@ -103,6 +103,8 @@ const PublicDashboard = () : JSX.Element => {
                         <DietaryTagAutocomplete
                             value={selectedDietaryTagIds}
                             onChange={onDietaryTagChange}
+                            variant={'standard'}
+                            fullWidth
                         />
                         {
                             filteredRecipes.map(x => <RecipeCard key={x.guid} recipe={x} onEditRecipeClick={onEditRecipeClick} />)
