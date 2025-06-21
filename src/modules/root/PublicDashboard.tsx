@@ -70,8 +70,8 @@ const PublicDashboard = () : JSX.Element => {
             />
             {
                 isLoadingRecipes ? <CircularProgress color={'secondary'} /> :
-                    <div className={'fdc w500'}>
-                        <div className={'fdr flx1 wfill mt20 mb20'}>
+                    <div className={'fdc w500 pb20'}>
+                        <div className={'fdr aic jcc flx1 wfill mt20 mb20'}>
                             <DebouncedSearchInput
                                 searchText={searchText}
                                 setSearchText={setSearchText}
@@ -80,8 +80,8 @@ const PublicDashboard = () : JSX.Element => {
                             />
                             {
                                 user &&
-                                <IconButton color='inherit' onClick={onAddRecipeClick}>
-                                    <AddIcon color='inherit' />
+                                <IconButton size={'large'} color='inherit' onClick={onAddRecipeClick}>
+                                    <AddIcon fontSize={'large'} color='inherit' />
                                 </IconButton>
                             }
                         </div>
