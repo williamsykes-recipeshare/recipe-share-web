@@ -67,7 +67,7 @@ export default class RecipeHelper {
     public static formRecipeIngredientSchema = () : ObjectSchema<AnyObject, YupRecipeIngredientShape> => Yup
         .object<YupRecipeIngredientShape, YupRecipeIngredientShape>({
             ingredientId: Yup.number().required('Required'),
-            quantity: Yup.number().required('Required').min(0),
+            quantity: Yup.number().typeError('Must be a number').required('Required').min(0),
         });
 
     public static formRecipeStepSchema = () : ObjectSchema<AnyObject, YupRecipeStepShape> => Yup
@@ -81,11 +81,11 @@ export default class RecipeHelper {
             id: Yup.number().required('Required'),
             guid: Yup.string().required('Required'),
             name: Yup.string().required('Required'),
-            cookingTimeMinutes: Yup.number().required('Required'),
+            cookingTimeMinutes: Yup.number().typeError('Must be a number').required('Required').moreThan(0, 'Must be greater than 0'),
 
-            recipeIngredientFormValues: Yup.array().of(this.formRecipeIngredientSchema()).required('Required'),
+            recipeIngredientFormValues: Yup.array().of(this.formRecipeIngredientSchema()).min(1, 'At least one ingredient is required').required('Required'),
             dietaryTagIds: Yup.array().of(Yup.number()).required('Required'),
-            steps: Yup.array().of(this.formRecipeStepSchema()).required('Required'),
+            steps: Yup.array().of(this.formRecipeStepSchema()).min(1, 'At least one step is required').required('Required'),
 
             isActive: Yup.boolean().required('Required'),
         });
