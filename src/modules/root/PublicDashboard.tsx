@@ -9,6 +9,8 @@ import { Add as AddIcon } from '@mui/icons-material';
 import RecipeEditDialog from '../recipe/dialog/RecipeEditDialog';
 import { useAppSelector } from '../../hooks/redux/useAppSelector';
 import RecipeCard from '../recipe/card/RecipeCard';
+import DietaryTagAutocomplete from '../custom/autocomplete/DietaryTagAutocomplete';
+import { IDietaryTag } from '../../models/masterData/dietaryTag';
 
 const StyledPage = styled(Page)(() => ({
     backgroundImage: `
@@ -22,6 +24,7 @@ const StyledPage = styled(Page)(() => ({
 const PublicDashboard = () : JSX.Element => {
 
     const [searchText, setSearchText] = useState<string | null>(null);
+    const [selectedDietaryTagIds, setSelectedDietaryTagIds] = useState<Array<number>>([]);
     const [showEdit, setShowEdit] = useState<boolean>(false);
     const [selectedRecipe, setSelectedRecipe] = useState<IRecipe | null>(null);
 
@@ -43,8 +46,20 @@ const PublicDashboard = () : JSX.Element => {
             });
         }
 
+        if (selectedDietaryTagIds.length > 0) {
+            filteredResult = filteredResult.filter((recipe : IRecipe) => {
+                return (
+                    recipe.recipeDietaryTags?.some(x => selectedDietaryTagIds.some(y => y === x.dietaryTag?.id))
+                );
+            });
+        }
+
         return filteredResult;
-    }, [recipes, searchText]);
+    }, [recipes, searchText, selectedDietaryTagIds]);
+
+    const onDietaryTagChange = (value : Array<IDietaryTag>) : void => {
+        setSelectedDietaryTagIds(value.map(x => x.id));
+    };
 
     const onAddRecipeClick = () : void => {
         setSelectedRecipe(null);
@@ -85,6 +100,10 @@ const PublicDashboard = () : JSX.Element => {
                                 </IconButton>
                             }
                         </div>
+                        <DietaryTagAutocomplete
+                            value={selectedDietaryTagIds}
+                            onChange={onDietaryTagChange}
+                        />
                         {
                             filteredRecipes.map(x => <RecipeCard key={x.guid} recipe={x} onEditRecipeClick={onEditRecipeClick} />)
                         }
