@@ -10,7 +10,7 @@ export default merge(defaultConfig, {
             'process.env': {
                 'NODE_ENV': JSON.stringify('production'),
             },
-            API_URL: JSON.stringify('http://localhost:5015'), // TODO: Replace with production deployed API
+            API_URL: JSON.stringify('https://recipesharewebapi-a8fgg5atajb0gvdr.southafricanorth-01.azurewebsites.net'),
         }),
         new CopyWebpackPlugin({
             patterns: [{
