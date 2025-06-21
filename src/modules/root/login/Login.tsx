@@ -77,7 +77,8 @@ const Login = () : React.JSX.Element => {
                                     <div className='flx5 mr5'>
                                         <FormTextField
                                             name='password'
-                                            label='Password*'
+                                            type='password'
+                                            label='Password'
                                             variant='outlined'
                                             fullWidth
                                             required

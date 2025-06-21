@@ -1,30 +1,38 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import UserHelper, { IUserRegistrationFormValue } from '../../../models/rights/user';
-import { Box, Button, CircularProgress, styled, Typography } from '@mui/material';
+import { Box, Button, CircularProgress, IconButton, InputAdornment, styled, Typography } from '@mui/material';
 import FormTextField from '../../custom/textField/FormTextField';
 import { useAppSelector } from '../../../hooks/redux/useAppSelector';
 import AuthThunk from '../../../store/auth/thunk';
 import { useAppDispatch } from '../../../hooks/redux/useAppDispatch';
 import themeVariables from '../../../theme/themeVariables';
-import moment from 'moment';
 import FormikForm from '../../custom/FormikForm';
+import { useNavigate } from 'react-router-dom';
+import { Visibility, VisibilityOff } from '@mui/icons-material';
 
 const StyledBox = styled(Box)`
     background-color: ${themeVariables.colors.material.primary.main};
 `;
 
 const Register = () : React.JSX.Element => {
+    const navigate = useNavigate();
     const dispatch = useAppDispatch();
+
     const isLoading = useAppSelector(x => x.auth.isLoading);
+
+    const [showPassword, setShowPassword] = useState<boolean>(true);
 
     const initialValues = useMemo(() => UserHelper.initUserRegistrationFormValues(), []);
 
+    const handleClickShowPassword = () : void => {
+        setShowPassword(!showPassword);
+    };
+
     const onSubmit = async (values : IUserRegistrationFormValue) : Promise<void> => {
-        const password = moment(values.password).format('DDMMYYYY');
-        dispatch(AuthThunk.register({
-            ...values,
-            password,
-        }));
+        dispatch(AuthThunk.register(values));
+        navigate('/', {
+            replace: true,
+        });
     };
 
     return (
@@ -62,7 +70,8 @@ const Register = () : React.JSX.Element => {
                                         name='name'
                                         label='Name'
                                         placeholder='Your Name'
-                                        variant='filled'
+                                        variant={'filled'}
+                                        autoComplete={'off'}
                                         fullWidth
                                         required
                                     />
@@ -71,11 +80,33 @@ const Register = () : React.JSX.Element => {
                                     <FormTextField
                                         name='email'
                                         label='Email'
-                                        type='email'
                                         placeholder='someone@example.com'
+                                        autoComplete={'off'}
                                         variant={'filled'}
                                         fullWidth
                                         required
+                                    />
+                                </div>
+                                <div className='fdr mt18'>
+                                    <FormTextField
+                                        name='password'
+                                        label='Password'
+                                        fullWidth
+                                        required
+                                        type={showPassword ? 'text' : 'password'}
+                                        InputProps={{
+                                            endAdornment: (
+                                                <InputAdornment position='end'>
+                                                    <IconButton
+                                                        aria-label='toggle password visibility'
+                                                        onClick={handleClickShowPassword}
+                                                        edge='end'
+                                                    >
+                                                        {showPassword ? <Visibility /> : <VisibilityOff />}
+                                                    </IconButton>
+                                                </InputAdornment>
+                                            ),
+                                        }}
                                     />
                                 </div>
                                 <div className='mt23'>

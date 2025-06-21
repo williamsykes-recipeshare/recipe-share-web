@@ -36,12 +36,8 @@ export interface IUserFormValue {
 
 export interface IUserRegistrationFormValue {
     name : string;
-    surname : string;
     email : string;
     password : string;
-
-    creativeCommonsLicenseAgreed : boolean;
-    popiaAgreed : boolean;
 }
 
 export interface IPasswordFormValue {
@@ -79,12 +75,8 @@ export default class UserHelper {
     public static initUserRegistrationFormValues() : IUserRegistrationFormValue {
         return {
             name: '',
-            surname: '',
             email: '',
             password: '',
-
-            creativeCommonsLicenseAgreed: false,
-            popiaAgreed: false,
         };
     }
 
@@ -140,13 +132,7 @@ export default class UserHelper {
     public static formUserRegistrationSchema = () : ObjectSchema<AnyObject, YupUserRegistrationShape> => Yup
         .object<YupUserRegistrationShape, YupUserRegistrationShape>({
             name: Yup.string().required('Required'),
-            surname: Yup.string().required('Required'),
             email: Yup.string().required('Required').email('Invalid email'),
             password: Yup.string().required('Required'),
-
-            creativeCommonsLicenseAgreed: Yup.boolean()
-                .oneOf([true], 'You must agree to the Creative Commons License'),
-            popiaAgreed: Yup.boolean()
-                .oneOf([true], 'You must agree to the POPIA Statement'),
         });
 }
