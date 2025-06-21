@@ -15,39 +15,47 @@ interface ISearchInputProps extends Omit<OutlinedInputProps,
 }
 
 const StyledOutlinedInput = styled(OutlinedInput)(() => ({
-    root: {
-        height: 40,
+    height: 40,
+    borderRadius: 50,
+    flex: 1,
+    backgroundColor: 'rgba(0, 0, 0, 0.2)',
+    transition: 'background-color 0.3s',
+
+    '& .MuiOutlinedInput-notchedOutline': {
+        borderWidth: '2px',
+        borderColor: 'white',
         borderRadius: 50,
-        flex: 1,
     },
-    notchedOutline: {
-        borderWidth: '2px !important',
-        borderColor: 'white',
-    },
-    input: {
-        borderWidth: '2px !important',
-        borderColor: 'white',
+
+    '& .MuiOutlinedInput-input': {
         color: 'white',
-        opacity: 1,
         fontSize: 16,
         fontWeight: 500,
-        transition: 'color 0.3s, background-color 0.3s',
         '&::placeholder': {
             textOverflow: 'ellipsis !important',
             color: 'white',
-            opacity: 0.85,
+            opacity: 1,
             fontSize: 14,
-            fontWeight: 400,
-        },
-        '&:focus': {
-            color: 'black',
-            backgroundColor: 'white',
+            fontWeight: 500,
         },
     },
+
+    '& .MuiInputAdornment-root .MuiIconButton-root': {
+        color: 'white',
+        transition: 'color 0.3s',
+    },
+
     '&.Mui-focused': {
+        backgroundColor: 'white',
+
+        '& .MuiOutlinedInput-input': {
+            color: 'black',
+        },
+
         '& .MuiOutlinedInput-notchedOutline': {
             borderColor: 'white',
         },
+
         '& .MuiInputAdornment-root .MuiIconButton-root': {
             color: 'black',
         },
