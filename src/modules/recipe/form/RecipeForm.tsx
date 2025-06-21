@@ -26,7 +26,6 @@ const RecipeForm = (props : IRecipeFormProps) : React.ReactElement => {
 
     const onSuccess = useDisplaySuccessCallback('Success');
     const [updateRecipe] = useSaveRecipeMutation();
-    // const [deleteRecipe, { status }] = useDeleteRecipeMutation();
 
     const [initialValues, setInitialValues] = useState<IRecipeFormValue>(RecipeHelper.initRecipeFormValues(props.initialValue));
 
@@ -47,19 +46,15 @@ const RecipeForm = (props : IRecipeFormProps) : React.ReactElement => {
                 id: props.initialValue?.recipeDietaryTags?.find(x => x.dietaryTagId === dietaryTagId)?.id ?? 0,
             } as IRecipeDietaryTag)),
             steps: values.steps.map((step, index) => {
-                // Try to find matching step from initialValue by name or guid or other unique property
-                // If you have guid in your form, use that; if not, use name as fallback
                 const existingStep = props.initialValue?.steps?.find(s => s.name === step.name) ?? null;
-
-                console.log(step);
 
                 return {
                     id: existingStep?.id ?? 0,
-                    guid: existingStep?.guid ?? v4(), // generate new guid if not found
-                    recipeId: props.initialValue?.id ?? 0, // ensure recipeId is set
-                    index: index, // the order of the step
+                    guid: existingStep?.guid ?? v4(),
+                    recipeId: props.initialValue?.id ?? 0,
+                    index: index, // This is important as it is what allows the steps to be re-ordered
                     name: step.name,
-                    isActive: true, // if you track active state, set it here or get from existingStep
+                    isActive: true,
                 } as IStep;
             }),
         }).unwrap();

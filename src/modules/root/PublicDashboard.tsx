@@ -1,13 +1,14 @@
 import React, { useMemo, useState } from 'react';
 import Page from '../custom/paper/Page';
 import UserAppBar from './appBar/UserAppBar';
-import { useGetRecipesQuery } from '../../hooks/query/recipe/recipe';
+import { useDeleteRecipeMutation, useGetRecipesQuery } from '../../hooks/query/recipe/recipe';
 import { IconButton, Typography } from '@mui/material';
 import Loading from './Loading';
 import DebouncedSearchInput from '../custom/textfield/DebouncedSearchInput';
 import { IRecipe } from '../../models/recipe/recipe';
 import { Add as AddIcon } from '@mui/icons-material';
 import { Edit as EditIcon } from '@mui/icons-material';
+import { Delete as DeleteIcon } from '@mui/icons-material';
 import RecipeEditDialog from '../recipe/dialog/RecipeEditDialog';
 import { CustomMouseEvent } from '../../models/helper';
 import lodash from 'lodash';
@@ -22,6 +23,7 @@ const PublicDashboard = () : JSX.Element => {
     const user = useAppSelector(x => x.auth.session?.user);
 
     const { data: recipes, isFetching: isLoadingRecipes } = useGetRecipesQuery();
+    const [deleteRecipe, { status }] = useDeleteRecipeMutation();
 
     const filteredRecipes = useMemo(() => {
         if (!recipes) return [];
@@ -48,10 +50,18 @@ const PublicDashboard = () : JSX.Element => {
     const onEditRecipeClick = (e : CustomMouseEvent) : void => {
         const id = Number(e.currentTarget.value);
         const recipe = filteredRecipes.find(x => x.id === id);
-        if (!recipe) return; // TODO: throw error?
+        if (!recipe) return; // TODO: display error?
 
         setSelectedRecipe(recipe);
         setShowEdit(true);
+    };
+
+    const onDeleteRecipeClick = (e : CustomMouseEvent) : void => {
+        const id = Number(e.currentTarget.value);
+        const recipe = filteredRecipes.find(x => x.id === id);
+        if (!recipe) return; // TODO: display error?
+
+        deleteRecipe(recipe);
     };
 
     const handleClose = () : void => {
@@ -90,10 +100,15 @@ const PublicDashboard = () : JSX.Element => {
                                         <div className={'fdr jcsb'}>
                                             <Typography variant={'bold'} fontSize={22}>{x.name}</Typography>
                                             {
-                                                user &&
-                                                <IconButton size={'small'} color='inherit' value={x.id} onClick={onEditRecipeClick}>
-                                                    <EditIcon fontSize={'small'} color='inherit' />
-                                                </IconButton>
+                                                (x.createdById === user?.id) &&
+                                                <div className='fdr'>
+                                                    <IconButton size={'small'} color='inherit' value={x.id} onClick={onEditRecipeClick}>
+                                                        <EditIcon fontSize={'small'} color='inherit' />
+                                                    </IconButton>
+                                                    <IconButton size={'small'} color='inherit' value={x.id} onClick={onDeleteRecipeClick}>
+                                                        <DeleteIcon fontSize={'small'} color='inherit' />
+                                                    </IconButton>
+                                                </div>
                                             }
                                         </div>
                                         <div className={'fdr mb10'}>
