@@ -5,6 +5,7 @@ import { v4 } from 'uuid';
 import { IRecipeIngredient } from './recipeIngredient';
 import { IRecipeDietaryTag } from './recipeDietaryTag';
 import { IStep } from '../masterData/step';
+import lodash from 'lodash';
 
 export interface IRecipe extends IBase {
     guid : string;
@@ -55,9 +56,9 @@ export default class RecipeHelper {
                 return { ingredientId: x.ingredientId, quantity: x.quantity };
             }) ?? [],
             dietaryTagIds: recipe?.recipeDietaryTags?.filter(x => x.isActive).map(x => x.dietaryTagId) ?? [],
-            steps: recipe?.steps?.filter(x => x.isActive).map(x => {
+            steps: lodash.orderBy(recipe?.steps ?? [], x => x.index).filter(x => x.isActive).map(x => {
                 return { name: x.name, index: x.index };
-            }) ?? [],
+            }),
 
             isActive: recipe?.isActive ?? true,
         };

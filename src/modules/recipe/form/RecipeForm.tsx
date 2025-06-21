@@ -57,7 +57,7 @@ const RecipeForm = (props : IRecipeFormProps) : React.ReactElement => {
                     id: existingStep?.id ?? 0,
                     guid: existingStep?.guid ?? v4(), // generate new guid if not found
                     recipeId: props.initialValue?.id ?? 0, // ensure recipeId is set
-                    index: step.index, // the order of the step
+                    index: index, // the order of the step
                     name: step.name,
                     isActive: true, // if you track active state, set it here or get from existingStep
                 } as IStep;
