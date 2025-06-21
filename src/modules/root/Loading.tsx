@@ -8,7 +8,7 @@ import '../../style/root/loading.scss';
 
 const Loading = () : React.JSX.Element => {
     return (
-        <div className='main-loading hfill fdc flx1 aic jcc'>
+        <div className='main-loading hfill fdc flx1 aic jcc' style={{ backgroundColor: 'transparent' }}>
             <img className='pulse' alt='loading' src='/assets/images/fav/web-app-manifest-192x192.png' />
         </div>
     );

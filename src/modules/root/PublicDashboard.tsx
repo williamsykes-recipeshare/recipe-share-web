@@ -2,7 +2,7 @@ import React, { useMemo, useState } from 'react';
 import Page from '../custom/paper/Page';
 import UserAppBar from './appBar/UserAppBar';
 import { useDeleteRecipeMutation, useGetRecipesQuery } from '../../hooks/query/recipe/recipe';
-import { IconButton, Typography } from '@mui/material';
+import { CircularProgress, IconButton, styled, Typography } from '@mui/material';
 import Loading from './Loading';
 import DebouncedSearchInput from '../custom/textfield/DebouncedSearchInput';
 import { IRecipe } from '../../models/recipe/recipe';
@@ -13,6 +13,15 @@ import RecipeEditDialog from '../recipe/dialog/RecipeEditDialog';
 import { CustomMouseEvent } from '../../models/helper';
 import lodash from 'lodash';
 import { useAppSelector } from '../../hooks/redux/useAppSelector';
+
+const StyledPage = styled(Page)(() => ({
+    backgroundImage: `
+      linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.4)),
+      url('/assets/images/background.png')
+    `,
+    backgroundSize: 'cover',
+    backgroundPosition: 'center',
+}));
 
 const PublicDashboard = () : JSX.Element => {
 
@@ -69,7 +78,7 @@ const PublicDashboard = () : JSX.Element => {
     };
 
     return (
-        <Page className='fdc aic hfill oya oxh'>
+        <StyledPage className='fdc aic hfill oya oxh'>
             <UserAppBar />
             <RecipeEditDialog
                 open={showEdit}
@@ -77,7 +86,7 @@ const PublicDashboard = () : JSX.Element => {
                 recipe={selectedRecipe}
             />
             {
-                isLoadingRecipes ? <Loading /> :
+                isLoadingRecipes ? <CircularProgress color={'secondary'} /> :
                     <div className={'fdc w500'}>
                         <div className={'fdr flx1 wfill mt20 mb20'}>
                             <DebouncedSearchInput
@@ -155,7 +164,7 @@ const PublicDashboard = () : JSX.Element => {
                         }
                     </div>
             }
-        </Page>
+        </StyledPage>
     );
 };
 

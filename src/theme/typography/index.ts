@@ -13,6 +13,10 @@ export const MuiTypography : {
     styleOverrides ?: ComponentsOverrides<Theme>['MuiTypography'];
     variants ?: ComponentsVariants<Theme>['MuiTypography'];
   } = {
+      // TODO: revisit
+      //   defaultProps: {
+      //       color: 'white',
+      //   },
       variants: [{
           props: {
               variant: 'bold',
