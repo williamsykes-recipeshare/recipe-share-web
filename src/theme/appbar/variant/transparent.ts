@@ -9,7 +9,7 @@ declare module '@mui/material/Paper' {
 const MuiAppBarTransparent : MuiCssStyle = {
     backgroundColor: 'transparent',
 
-    padding: '40px 0px 40px 0px',
+    padding: '20px 0px 20px 0px',
 };
 
 export default MuiAppBarTransparent;

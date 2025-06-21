@@ -28,11 +28,17 @@ const UserAppBar = () : JSX.Element => {
 
     const user = useAppSelector(x => x.auth.session?.user);
 
-    const onLogoutClick = () : void => {
-        dispatch(AuthThunk.logout());
-        navigate('/', {
-            replace: true,
-        });
+    const onLoginLogoutClick = () : void => {
+        if (user) {
+            dispatch(AuthThunk.logout());
+            navigate('/', {
+                replace: true,
+            });
+        } else {
+            navigate('/login', {
+                replace: false,
+            });
+        }
     };
 
     const onLogoClick = () : void => {
@@ -58,15 +64,18 @@ const UserAppBar = () : JSX.Element => {
                         color='primary'
                         variant='outlined'
                         type='button'
-                        onClick={onLogoutClick}
+                        onClick={onLoginLogoutClick}
                     >
-                        Logout
+                        { user ? 'Logout' : 'Login/Register'}
                     </Button>
-                    <Avatar color={'primary'} className={'w60 h60 ml10'}>
-                        <Typography fontSize={22} variant={'medium'} color={'white-offset'}>
-                            { user?.name[0].toLocaleUpperCase() }
-                        </Typography>
-                    </Avatar>
+                    {
+                        user &&
+                        <Avatar color={'primary'} className={'w60 h60 ml10'}>
+                            <Typography fontSize={22} variant={'medium'} color={'white-offset'}>
+                                { user.name[0].toLocaleUpperCase() }
+                            </Typography>
+                        </Avatar>
+                    }
                 </div>
             </StyledToolbar>
         </AppBar>

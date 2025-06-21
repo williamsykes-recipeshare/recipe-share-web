@@ -11,12 +11,15 @@ import { Edit as EditIcon } from '@mui/icons-material';
 import RecipeEditDialog from '../recipe/dialog/RecipeEditDialog';
 import { CustomMouseEvent } from '../../models/helper';
 import lodash from 'lodash';
+import { useAppSelector } from '../../hooks/redux/useAppSelector';
 
 const PublicDashboard = () : JSX.Element => {
 
     const [searchText, setSearchText] = useState<string | null>(null);
     const [showEdit, setShowEdit] = useState<boolean>(false);
     const [selectedRecipe, setSelectedRecipe] = useState<IRecipe | null>(null);
+
+    const user = useAppSelector(x => x.auth.session?.user);
 
     const { data: recipes, isFetching: isLoadingRecipes } = useGetRecipesQuery();
 
@@ -71,11 +74,14 @@ const PublicDashboard = () : JSX.Element => {
                                 searchText={searchText}
                                 setSearchText={setSearchText}
                                 autoFocus
+                                fullWidth
                             />
-                            {/* TODO: Only show this if user is signed in */}
-                            <IconButton color='inherit' onClick={onAddRecipeClick}>
-                                <AddIcon color='inherit' />
-                            </IconButton>
+                            {
+                                user &&
+                                <IconButton color='inherit' onClick={onAddRecipeClick}>
+                                    <AddIcon color='inherit' />
+                                </IconButton>
+                            }
                         </div>
                         {
                             filteredRecipes.map(x => {
@@ -83,10 +89,12 @@ const PublicDashboard = () : JSX.Element => {
                                     <div key={x.guid} className={'fdc'}>
                                         <div className={'fdr jcsb'}>
                                             <Typography variant={'bold'} fontSize={22}>{x.name}</Typography>
-                                            {/* TODO: Only show this if user is signed in */}
-                                            <IconButton size={'small'} color='inherit' value={x.id} onClick={onEditRecipeClick}>
-                                                <EditIcon fontSize={'small'} color='inherit' />
-                                            </IconButton>
+                                            {
+                                                user &&
+                                                <IconButton size={'small'} color='inherit' value={x.id} onClick={onEditRecipeClick}>
+                                                    <EditIcon fontSize={'small'} color='inherit' />
+                                                </IconButton>
+                                            }
                                         </div>
                                         <div className={'fdr mb10'}>
                                             {

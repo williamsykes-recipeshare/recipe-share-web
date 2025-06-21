@@ -8,6 +8,7 @@ interface IDebouncedSearchInputProps {
     setSearchText ?: (search : string | null) => void;
     autoFocus ?: boolean;
     disabled ?: boolean;
+    fullWidth ?: boolean;
 }
 
 export const SEARCH_TEXT_DEBOUNCE_TIME = 500;
@@ -30,6 +31,7 @@ const DebouncedSearchInput = (props : IDebouncedSearchInputProps) : React.ReactE
 
     return (
         <SearchInput
+            {...props}
             placeholder={props.placeholder}
             disabled={props.disabled}
             id={'searchText'}
@@ -37,6 +39,7 @@ const DebouncedSearchInput = (props : IDebouncedSearchInputProps) : React.ReactE
             onChange={debounceSearch}
             size={'small'}
             autoFocus={props.autoFocus}
+            fullWidth={props.fullWidth}
         />
     );
 };

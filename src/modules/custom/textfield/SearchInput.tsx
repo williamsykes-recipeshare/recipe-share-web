@@ -8,6 +8,7 @@ import SearchSVG from '../svg/SearchSVG';
 interface ISearchInputProps extends Omit<OutlinedInputProps,
     'type' | 'margin' | 'endAdornment' | 'value' | 'onChange'> {
     autoFocus ?: boolean;
+    fullWidth ?: boolean;
     onCommit ?: (value : string) => void;
     onChange ?: (value : string) => void;
     value : string;
@@ -111,14 +112,14 @@ const SearchInput = (props : ISearchInputProps) => {
     const handleBlur = () => setIsFocused(false);
 
     return (
-        <form onSubmit={handleCommit} className={'flex'}>
+        <form onSubmit={handleCommit} className={`flex${props.fullWidth ? ' wfill' : ''}`}>
             <StyledOutlinedInput
                 {...props}
                 value={value}
                 placeholder={props.placeholder ?? 'SEARCH HERE'}
                 margin={'none'}
                 size={props.size}
-                fullWidth
+                fullWidth={props.fullWidth}
                 inputRef={inputRef}
                 onChange={handleChange}
                 onFocus={handleFocus}
