@@ -4,8 +4,8 @@ import themeVariables from '../../../theme/themeVariables';
 
 type CustomChipProps = ChipProps
 
-const StyledChip = styled(MuiChip)(() => ({
-    backgroundColor: themeVariables.colors.material.primary,
+const StyledChip = styled(MuiChip)(({
+    backgroundColor: themeVariables.colors.material.primary.main,
     height: 25,
     color: themeVariables.colors.material.white.main,
     fontWeight: 'bold',
