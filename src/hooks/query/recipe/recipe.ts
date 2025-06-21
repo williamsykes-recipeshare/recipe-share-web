@@ -18,11 +18,60 @@ export const recipeApi = createApi({
                 { type: 'Recipe', id: 'LIST' },
             ],
         }),
+        saveRecipe: builder.mutation<IRecipe | null, Pick<IRecipe, 'id'> & Partial<IRecipe>>({
+            query: (save) => ({
+                url: 'api/v1/Recipe/Save',
+                method: 'POST',
+                body: {
+                    ...save,
+                    recipeIngredients: save.recipeIngredients?.map((recipeIngredient) => ({
+                        ...recipeIngredient,
+                        createdById: save.createdById ?? 0,
+                        createdByName: save.createdByName ?? '',
+                        updatedById: save.updatedById ?? 0,
+                        updatedByName: save.updatedByName ?? '',
+                    })),
+                    recipeDietaryTags: save.recipeDietaryTags?.map((recipeDietaryTag) => ({
+                        ...recipeDietaryTag,
+                        createdById: save.createdById ?? 0,
+                        createdByName: save.createdByName ?? '',
+                        updatedById: save.updatedById ?? 0,
+                        updatedByName: save.updatedByName ?? '',
+                    })),
+                    steps: save.steps?.map((step) => ({
+                        ...step,
+                        createdById: save.createdById ?? 0,
+                        createdByName: save.createdByName ?? '',
+                        updatedById: save.updatedById ?? 0,
+                        updatedByName: save.updatedByName ?? '',
+                    })),
+                    createdById: save.createdById ?? 0,
+                    createdByName: save.createdByName ?? '',
+                    updatedById: save.updatedById ?? 0,
+                    updatedByName: save.updatedByName ?? '',
+                },
+            }),
+            invalidatesTags: (result, error, { id }) => [
+                { type: 'Recipe', id: !id ? 'LIST' : id },
+            ],
+        }),
+        deleteRecipe: builder.mutation<IRecipe | null, Pick<IRecipe, 'id'> & Partial<IRecipe>>({
+            query: (save) => ({
+                url: 'api/v1/Recipe/Delete',
+                method: 'DELETE',
+                params: {
+                    id: save.id,
+                },
+            }),
+            invalidatesTags: (result, error, save) => [{ type: 'Recipe', id: save.id }],
+        }),
     }),
 });
 
 export const {
     useGetRecipesQuery,
     useLazyGetRecipesQuery,
+    useSaveRecipeMutation,
+    useDeleteRecipeMutation,
 } = recipeApi;
 

@@ -2,14 +2,21 @@ import React, { useMemo, useState } from 'react';
 import Page from '../custom/paper/Page';
 import UserAppBar from './appBar/UserAppBar';
 import { useGetRecipesQuery } from '../../hooks/query/recipe/recipe';
-import { Typography } from '@mui/material';
+import { IconButton, Typography } from '@mui/material';
 import Loading from './Loading';
 import DebouncedSearchInput from '../custom/textfield/DebouncedSearchInput';
 import { IRecipe } from '../../models/recipe/recipe';
+import { Add as AddIcon } from '@mui/icons-material';
+import { Edit as EditIcon } from '@mui/icons-material';
+import RecipeEditDialog from '../recipe/dialog/RecipeEditDialog';
+import { CustomMouseEvent } from '../../models/helper';
+import lodash from 'lodash';
 
 const PublicDashboard = () : JSX.Element => {
 
     const [searchText, setSearchText] = useState<string | null>(null);
+    const [showEdit, setShowEdit] = useState<boolean>(false);
+    const [selectedRecipe, setSelectedRecipe] = useState<IRecipe | null>(null);
 
     const { data: recipes, isFetching: isLoadingRecipes } = useGetRecipesQuery();
 
@@ -30,27 +37,60 @@ const PublicDashboard = () : JSX.Element => {
         return filteredResult;
     }, [recipes, searchText]);
 
+    const onAddRecipeClick = () : void => {
+        setSelectedRecipe(null);
+        setShowEdit(true);
+    };
+
+    const onEditRecipeClick = (e : CustomMouseEvent) : void => {
+        const id = Number(e.currentTarget.value);
+        const recipe = filteredRecipes.find(x => x.id === id);
+        if (!recipe) return; // TODO: throw error?
+
+        setSelectedRecipe(recipe);
+        setShowEdit(true);
+    };
+
+    const handleClose = () : void => {
+        setShowEdit(false);
+    };
+
     return (
         <Page className='fdc aic hfill oya oxh'>
             <UserAppBar />
+            <RecipeEditDialog
+                open={showEdit}
+                handleClose={handleClose}
+                recipe={selectedRecipe}
+            />
             {
                 isLoadingRecipes ? <Loading /> :
                     <div className={'fdc w500'}>
-                        <div className={'flx1 wfill mt20 mb20'}>
+                        <div className={'fdr flx1 wfill mt20 mb20'}>
                             <DebouncedSearchInput
                                 searchText={searchText}
                                 setSearchText={setSearchText}
                                 autoFocus
                             />
+                            {/* TODO: Only show this if user is signed in */}
+                            <IconButton color='inherit' onClick={onAddRecipeClick}>
+                                <AddIcon color='inherit' />
+                            </IconButton>
                         </div>
                         {
                             filteredRecipes.map(x => {
                                 return (
                                     <div key={x.guid} className={'fdc'}>
-                                        <Typography variant={'bold'} fontSize={22}>{x.name}</Typography>
+                                        <div className={'fdr jcsb'}>
+                                            <Typography variant={'bold'} fontSize={22}>{x.name}</Typography>
+                                            {/* TODO: Only show this if user is signed in */}
+                                            <IconButton size={'small'} color='inherit' value={x.id} onClick={onEditRecipeClick}>
+                                                <EditIcon fontSize={'small'} color='inherit' />
+                                            </IconButton>
+                                        </div>
                                         <div className={'fdr mb10'}>
                                             {
-                                                x.recipeDietaryTags?.map((y, index) => {
+                                                x.recipeDietaryTags?.filter(y => !!y.isActive).map((y, index) => {
                                                     return (
                                                         <Typography
                                                             key={`${x.guid}-${y.dietaryTag?.guid}`}
@@ -65,7 +105,7 @@ const PublicDashboard = () : JSX.Element => {
                                         <Typography variant={'bold'} fontSize={18}>Ingredients:</Typography>
                                         <ul className={'m0 mb10'}>
                                             {
-                                                x.recipeIngredients?.map(y => {
+                                                x.recipeIngredients?.filter(y => !!y.isActive).map(y => {
                                                     return (
                                                         <li key={`${x.guid}-${y.ingredient?.guid}`}>
                                                             <Typography>{`(${y.quantity}) ${y.ingredient?.name}`}</Typography>
@@ -77,13 +117,13 @@ const PublicDashboard = () : JSX.Element => {
                                         <Typography variant={'bold'} fontSize={18}>Instructions:</Typography>
                                         <ol className={'m0 mb20'}>
                                             {
-                                                x.steps?.map(y => {
+                                                lodash.chain(x.steps).filter(y => !!y.isActive).orderBy(y => y.index).map(y => {
                                                     return (
                                                         <li key={`${x.guid}-${y.guid}`}>
                                                             <Typography>{y.name}</Typography>
                                                         </li>
                                                     );
-                                                })
+                                                }).value()
                                             }
                                         </ol>
                                     </div>

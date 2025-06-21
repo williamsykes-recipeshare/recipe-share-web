@@ -18,11 +18,11 @@ if (process.env.NODE_ENV !== 'production') {
 const Root = React.lazy(() => import('./modules/Root'));
 
 const Index = () : React.JSX.Element => (
-    <React.StrictMode>
-        <Suspense fallback={<div />}>
-            <Root />
-        </Suspense>
-    </React.StrictMode>
+    // <React.StrictMode>
+    <Suspense fallback={<div />}>
+        <Root />
+    </Suspense>
+    // </React.StrictMode>
 );
 
 const rootDomElement = document.getElementById('root');

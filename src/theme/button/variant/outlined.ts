@@ -1,7 +1,6 @@
 import { MuiCssStyle } from '../../../models/helper';
 
 const MuiButtonOutlined : MuiCssStyle = {
-    maxHeight: 32,
     borderRadius: 24,
     paddingTop: 4,
     paddingBottom: 4,
