@@ -52,7 +52,7 @@ const FormRecipeIngredients = () : JSX.Element => {
                             render={({ field: quantityField, fieldState }) => (
                                 <TextField
                                     {...quantityField}
-                                    type='number'
+                                    type='text'
                                     label='Quantity'
                                     error={!!fieldState.error}
                                     helperText={fieldState.error?.message || ''}
@@ -75,7 +75,7 @@ const FormRecipeIngredients = () : JSX.Element => {
                 <Button
                     variant='outlined'
                     startIcon={<AddIcon />}
-                    onClick={() => append({ ingredientId: 0, quantity: 0 } as IRecipeIngredientFormValue)}
+                    onClick={() => append({ ingredientId: 0, quantity: '' } as IRecipeIngredientFormValue)}
                 >
                     Add Ingredient
                 </Button>

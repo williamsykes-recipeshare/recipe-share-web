@@ -6,5 +6,5 @@ export interface IRecipeIngredient extends IBase {
     ingredient ?: IIngredient;
     recipeId : number;
 
-    quantity : number;
+    quantity : string;
 }

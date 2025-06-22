@@ -19,7 +19,7 @@ export interface IRecipe extends IBase {
 
 export interface IRecipeIngredientFormValue {
     ingredientId : number;
-    quantity : number;
+    quantity : string;
 }
 
 export interface IRecipeStepFormValue {
@@ -67,7 +67,7 @@ export default class RecipeHelper {
     public static formRecipeIngredientSchema = () : ObjectSchema<AnyObject, YupRecipeIngredientShape> => Yup
         .object<YupRecipeIngredientShape, YupRecipeIngredientShape>({
             ingredientId: Yup.number().required('Required'),
-            quantity: Yup.number().typeError('Must be a number').required('Required').moreThan(0, 'Must be greater than 0'),
+            quantity: Yup.string().required('Required'),
         });
 
     public static formRecipeStepSchema = () : ObjectSchema<AnyObject, YupRecipeStepShape> => Yup
