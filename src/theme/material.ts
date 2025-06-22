@@ -6,6 +6,7 @@ import { MuiAppBar } from './appbar';
 import { MuiAvatar } from './avatar';
 import { MuiTypography } from './typography';
 import { MuiButton } from './button';
+import { MuiTextField } from './textField';
 
 const materialTheme = createTheme({
     typography: {
@@ -21,6 +22,7 @@ const materialTheme = createTheme({
         MuiAppBar,
         MuiTypography,
         MuiButton,
+        MuiTextField,
         MuiFormHelperText: {
             variants: [{
                 props: {

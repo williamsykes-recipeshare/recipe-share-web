@@ -79,7 +79,7 @@ const DietaryTagAutocomplete = (props : IDietaryTagAutocompleteProps) : React.Re
                 }}
             />
         );
-    }, [props.label, props.variant, props.error, props.fullWidth, isLoading, inputRef]);
+    }, [props.placeholder, props.label, props.fullWidth, props.variant, props.error, isLoading]);
 
     const options = useMemo<Array<IDietaryTag>>(() => {
         return lodash.chain(dietaryTags)
