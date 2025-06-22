@@ -13,7 +13,6 @@ const MuiPaperPage : MuiCssStyle = {
     minHeight: 0,
     minWidth: 0,
     paddingTop: 14,
-    paddingLeft: 24,
     overflowX: 'auto',
     overflowY: 'auto',
 };

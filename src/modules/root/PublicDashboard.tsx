@@ -2,7 +2,7 @@ import React, { useMemo, useState } from 'react';
 import Page from '../custom/paper/Page';
 import UserAppBar from './appBar/UserAppBar';
 import { useGetRecipesQuery } from '../../hooks/query/recipe/recipe';
-import { CircularProgress, IconButton, styled } from '@mui/material';
+import { Box, CircularProgress, IconButton, styled } from '@mui/material';
 import DebouncedSearchInput from '../custom/textfield/DebouncedSearchInput';
 import { IRecipe } from '../../models/recipe/recipe';
 import { Add as AddIcon } from '@mui/icons-material';
@@ -19,6 +19,19 @@ const StyledPage = styled(Page)(() => ({
     `,
     backgroundSize: 'cover',
     backgroundPosition: 'center',
+}));
+
+const StyledBox = styled(Box)(({ theme }) => ({
+    // Responsive width logic
+    width: '100%',
+    [theme.breakpoints.up('md')]: {
+        minWidth: '400px',
+        maxWidth: '600px',
+    },
+    [theme.breakpoints.down('md')]: {
+        minWidth: '90%',
+        maxWidth: '90%',
+    },
 }));
 
 const PublicDashboard = () : JSX.Element => {
@@ -85,7 +98,7 @@ const PublicDashboard = () : JSX.Element => {
             />
             {
                 isLoadingRecipes ? <CircularProgress color={'secondary'} /> :
-                    <div className={'fdc w500 pb20'}>
+                    <StyledBox className={'fdc aic jcc pb20'}>
                         <div className={'fdr aic jcc flx1 wfill mt20 mb20'}>
                             <DebouncedSearchInput
                                 searchText={searchText}
@@ -106,10 +119,12 @@ const PublicDashboard = () : JSX.Element => {
                             variant={'standard'}
                             fullWidth
                         />
-                        {
-                            filteredRecipes.map(x => <RecipeCard key={x.guid} recipe={x} onEditRecipeClick={onEditRecipeClick} />)
-                        }
-                    </div>
+                        <div className={'fdc jcc wfill'}>
+                            {
+                                filteredRecipes.map(x => <RecipeCard key={x.guid} recipe={x} onEditRecipeClick={onEditRecipeClick} />)
+                            }
+                        </div>
+                    </StyledBox>
             }
         </StyledPage>
     );
