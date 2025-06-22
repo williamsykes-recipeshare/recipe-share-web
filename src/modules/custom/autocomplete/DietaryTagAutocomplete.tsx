@@ -23,6 +23,7 @@ export interface IDietaryTagAutocompleteProps {
     size ?: 'small' | 'medium';
 
     label ?: string;
+    placeholder ?: string;
     className ?: string;
     error ?: boolean;
 
@@ -66,6 +67,7 @@ const DietaryTagAutocomplete = (props : IDietaryTagAutocompleteProps) : React.Re
             <TextField
                 inputRef={inputRef}
                 {...params}
+                placeholder={props.placeholder}
                 label={props.label}
                 fullWidth={props.fullWidth}
                 variant={props.variant}

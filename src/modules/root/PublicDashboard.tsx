@@ -114,6 +114,7 @@ const PublicDashboard = () : JSX.Element => {
                             }
                         </div>
                         <DietaryTagAutocomplete
+                            label={'Dietary Tags'}
                             value={selectedDietaryTagIds}
                             onChange={onDietaryTagChange}
                             variant={'standard'}
