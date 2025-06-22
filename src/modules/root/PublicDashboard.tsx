@@ -48,7 +48,7 @@ const PublicDashboard = () : JSX.Element => {
     const filteredRecipes = useMemo(() => {
         if (!recipes) return [];
 
-        let filteredResult = [...recipes];
+        let filteredResult = [...recipes].filter(x => x.isActive);
 
         if (searchText) {
             filteredResult = filteredResult.filter((recipe : IRecipe) => {

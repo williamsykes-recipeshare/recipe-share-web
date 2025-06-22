@@ -6,6 +6,7 @@ import lodash from 'lodash';
 import { useDeleteRecipeMutation } from '../../../hooks/query/recipe/recipe';
 import { useAppSelector } from '../../../hooks/redux/useAppSelector';
 import { IRecipe } from '../../../models/recipe/recipe';
+import useDisplaySuccessCallback from '../../../hooks/snackbar/useSuccessCallback';
 
 const StyledBox = styled(Box)({
     backgroundColor: 'rgba(255, 255, 255, 0.5)',
@@ -45,6 +46,8 @@ export interface IRecipeCardProps {
 
 const RecipeCard = (props : IRecipeCardProps) : JSX.Element => {
 
+    const onDeleteSuccess = useDisplaySuccessCallback('Success');
+
     const { recipe } = { ...props };
 
     const user = useAppSelector(x => x.auth.session?.user);
@@ -55,8 +58,10 @@ const RecipeCard = (props : IRecipeCardProps) : JSX.Element => {
         props.onEditRecipeClick(recipe);
     };
 
-    const onDeleteRecipeClick = () : void => {
-        deleteRecipe(recipe);
+    const onDeleteRecipeClick = async () : Promise<void> => {
+        await deleteRecipe(recipe);
+
+        onDeleteSuccess('Recipe deleted successfully');
     };
 
     return (

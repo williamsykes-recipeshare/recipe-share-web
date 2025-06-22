@@ -57,13 +57,27 @@ export const recipeApi = createApi({
         }),
         deleteRecipe: builder.mutation<IRecipe | null, Pick<IRecipe, 'id'> & Partial<IRecipe>>({
             query: (save) => ({
-                url: 'api/v1/Recipe/Delete',
-                method: 'DELETE',
-                params: {
-                    id: save.id,
+                url: 'api/v1/Recipe/Save',
+                method: 'POST',
+                body: {
+                    ...save,
+                    isActive: false,
                 },
             }),
-            invalidatesTags: (result, error, save) => [{ type: 'Recipe', id: save.id }],
+            async onQueryStarted({ id }, { dispatch, queryFulfilled }) {
+                try {
+                    await queryFulfilled;
+                    dispatch(
+                        recipeApi.util.updateQueryData('getRecipes', undefined, (draft) => {
+                            return draft.filter((recipe) => recipe.id !== id);
+                        }),
+                    );
+                } catch {
+                // do nothing if the delete failed
+                }
+            },
+            // No invalidatesTags here since you handle it manually:
+            // invalidatesTags: ...
         }),
     }),
 });
