@@ -6,11 +6,17 @@ import authReducer from './auth/reducer';
 import { rtkQueryErrorLogger } from './middleware/rtkQueryErrorLogger';
 import { rightMiddleware } from './right/middleware';
 import { rightReducer } from './right/reducer';
+import { masterDataReducer } from './masterData/reducer';
+import { recipeReducer } from './recipe/reducer';
+import { masterDataMiddleware } from './masterData/middleware';
+import { recipeMiddleware } from './recipe/middleware';
 
 export const rootReducer = combineReducers({
     auth: authReducer,
     notification: notificationReducer,
     ...rightReducer,
+    ...masterDataReducer,
+    ...recipeReducer,
 });
 
 export type RootReducer = typeof rootReducer;
@@ -20,6 +26,8 @@ const store = configureStore({
     devTools: process.env.NODE_ENV === 'development',
     middleware: (getDefaultMiddleware) => getDefaultMiddleware()
         .concat(rightMiddleware)
+        .concat(masterDataMiddleware)
+        .concat(recipeMiddleware)
         .concat(rtkQueryErrorLogger),
 });
 
