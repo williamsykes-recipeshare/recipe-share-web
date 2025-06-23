@@ -24,10 +24,12 @@ const Login = () : React.JSX.Element => {
     const initialValues = useMemo(() => UserHelper.initLoginFormValues(), []);
 
     const onSubmit = async (values : ILoginFormValue) : Promise<void> => {
-        dispatch(AuthThunk.login({ ...values }));
-        navigate('/', {
-            replace: true,
-        });
+        try {
+            await dispatch(AuthThunk.login({ ...values })).unwrap();
+            navigate('/', { replace: true });
+        } catch (error) {
+            console.error('Login failed:', error);
+        }
     };
 
     return (
