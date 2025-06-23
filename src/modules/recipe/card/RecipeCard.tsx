@@ -8,6 +8,7 @@ import { useAppSelector } from '../../../hooks/redux/useAppSelector';
 import { IRecipe } from '../../../models/recipe/recipe';
 import useDisplaySuccessCallback from '../../../hooks/snackbar/useSuccessCallback';
 import { useNavigate } from 'react-router-dom';
+import { CustomMouseEvent } from '../../../models/helper';
 
 const StyledBox = styled(Box)({
     backgroundColor: 'rgba(255, 255, 255, 0.5)',
@@ -57,11 +58,15 @@ const RecipeCard = (props : IRecipeCardProps) : JSX.Element => {
 
     const [deleteRecipe, { isLoading: isDeleting }] = useDeleteRecipeMutation();
 
-    const onEditRecipeClick = () : void => {
+    const onEditRecipeClick = (e : CustomMouseEvent) : void => {
+        e.stopPropagation();
+
         props.onEditRecipeClick(recipe);
     };
 
-    const onDeleteRecipeClick = async () : Promise<void> => {
+    const onDeleteRecipeClick = async (e : CustomMouseEvent) : Promise<void> => {
+        e.stopPropagation();
+
         await deleteRecipe(recipe);
 
         onDeleteSuccess('Recipe deleted successfully');
