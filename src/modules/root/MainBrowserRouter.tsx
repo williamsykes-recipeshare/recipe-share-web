@@ -4,10 +4,10 @@ import { useAppSelector } from '../../hooks/redux/useAppSelector';
 import SessionRoute from '../custom/route/SessionRoute';
 import ErrorBoundary from './error/ErrorBoundary';
 import NotFoundPage from './error/NotFoundPage';
-import Dashboard from './Dashboard';
 import { EnumUserRole } from '../../models/rights/enum';
 import PublicDashboard from './PublicDashboard';
 import LoginRegister from './login/LoginRegister';
+import RecipeView from '../recipe/RecipeView';
 
 const MainBrowserRouter = () : React.JSX.Element => {
     const user = useAppSelector(x => x.auth.session?.user);
@@ -24,6 +24,7 @@ const MainBrowserRouter = () : React.JSX.Element => {
                         <Route path={'*'} element={<NotFoundPage />} />
                         <>
                             <Route path={'/'} element={<PublicDashboard />} />
+                            <Route path={'/recipe/:id'} element={<RecipeView />} />
                             <Route
                                 path='/login'
                                 element={
@@ -31,12 +32,6 @@ const MainBrowserRouter = () : React.JSX.Element => {
                                 }
                             />
                         </>
-                        {
-                            user?.role === EnumUserRole.User &&
-                            <>
-                                <Route path={'/'} element={<Dashboard />} />
-                            </>
-                        }
                         {
                             user?.role === EnumUserRole.Admin &&
                             <>

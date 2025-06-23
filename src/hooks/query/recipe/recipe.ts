@@ -8,6 +8,16 @@ export const recipeApi = createApi({
     baseQuery: axiosBaseQuery(),
 
     endpoints: (builder) => ({
+        getRecipe: builder.query<IRecipe, number>({
+            query: (id) => ({
+                url: 'api/v1/Recipe/Get',
+                method: 'GET',
+                params: {
+                    id,
+                },
+            }),
+            providesTags: (result, error, id) => [{ type: 'Recipe', id }],
+        }),
         getRecipes: builder.query<Array<IRecipe>, void>({
             query: () => ({
                 url: 'api/v1/Recipe/GetList',
@@ -83,6 +93,7 @@ export const recipeApi = createApi({
 });
 
 export const {
+    useGetRecipeQuery,
     useGetRecipesQuery,
     useLazyGetRecipesQuery,
     useSaveRecipeMutation,

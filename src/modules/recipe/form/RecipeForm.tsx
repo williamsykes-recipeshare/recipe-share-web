@@ -8,7 +8,7 @@ import { useSaveRecipeMutation } from '../../../hooks/query/recipe/recipe';
 import useDisplaySuccessCallback from '../../../hooks/snackbar/useSuccessCallback';
 import FormDietaryTagAutocomplete from '../../custom/autocomplete/form/FormDietaryTagAutocomplete';
 import FormRecipeIngredients from '../../ingredient/FormEditRecipeIngredient';
-import { Button } from '@mui/material';
+import { Button, CircularProgress } from '@mui/material';
 import { Save } from '@mui/icons-material';
 import FormRecipeSteps from '../../step/FormRecipeStepEdit';
 import { v4 } from 'uuid';
@@ -76,48 +76,52 @@ const RecipeForm = (props : IRecipeFormProps) : React.ReactElement => {
         >
             {(formProps) => (
                 <>
-                    <div className={'fdr flx1 mb20 oh'}>
-                        <div className={'fdc flx2 mt40 oya'}>
-                            <div className={'fdc'}>
-                                <div className={'flx1 mh10 mt20'}>
-                                    <FormTextField
-                                        id={'name'}
-                                        name={'name'}
-                                        label={'Name'}
-                                        fullWidth
-                                        variant={'outlined'}
-                                        size={'small'}
-                                    />
-                                </div>
-                                <div className={'flx1 mh10'}>
-                                    <FormTextField
-                                        id={'cookingTimeMinutes'}
-                                        name={'cookingTimeMinutes'}
-                                        label={'Cooking Time (Minutes)'}
-                                        type={'number'}
-                                        fullWidth
-                                        variant={'outlined'}
-                                        size={'small'}
-                                    />
-                                </div>
-                                <div className={'flx1 mh10'}>
-                                    <FormDietaryTagAutocomplete
-                                        id={'recipeDietaryTags'}
-                                        name={'dietaryTagIds'}
-                                        label={'Dietary Tag'}
-                                        fullWidth
-                                        size={'small'}
-                                    />
-                                </div>
-                                <div className={'flx1 mh10'}>
-                                    <FormRecipeIngredients />
-                                </div>
-                                <div className={'flx1 mh10'}>
-                                    <FormRecipeSteps />
+                    {
+                        isSaving ?
+                            <CircularProgress color={'secondary'} /> :
+                            <div className={'fdr flx1 mb20 oh'}>
+                                <div className={'fdc flx2 mt40 oya'}>
+                                    <div className={'fdc'}>
+                                        <div className={'flx1 mh10 mt20'}>
+                                            <FormTextField
+                                                id={'name'}
+                                                name={'name'}
+                                                label={'Name'}
+                                                fullWidth
+                                                variant={'outlined'}
+                                                size={'small'}
+                                            />
+                                        </div>
+                                        <div className={'flx1 mh10'}>
+                                            <FormTextField
+                                                id={'cookingTimeMinutes'}
+                                                name={'cookingTimeMinutes'}
+                                                label={'Cooking Time (Minutes)'}
+                                                type={'number'}
+                                                fullWidth
+                                                variant={'outlined'}
+                                                size={'small'}
+                                            />
+                                        </div>
+                                        <div className={'flx1 mh10'}>
+                                            <FormDietaryTagAutocomplete
+                                                id={'recipeDietaryTags'}
+                                                name={'dietaryTagIds'}
+                                                label={'Dietary Tag'}
+                                                fullWidth
+                                                size={'small'}
+                                            />
+                                        </div>
+                                        <div className={'flx1 mh10'}>
+                                            <FormRecipeIngredients />
+                                        </div>
+                                        <div className={'flx1 mh10'}>
+                                            <FormRecipeSteps />
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
+                    }
                     <Button
                         type='submit'
                         variant='outlined'

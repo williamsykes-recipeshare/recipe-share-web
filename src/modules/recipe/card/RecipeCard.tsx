@@ -7,6 +7,7 @@ import { useDeleteRecipeMutation } from '../../../hooks/query/recipe/recipe';
 import { useAppSelector } from '../../../hooks/redux/useAppSelector';
 import { IRecipe } from '../../../models/recipe/recipe';
 import useDisplaySuccessCallback from '../../../hooks/snackbar/useSuccessCallback';
+import { useNavigate } from 'react-router-dom';
 
 const StyledBox = styled(Box)({
     backgroundColor: 'rgba(255, 255, 255, 0.5)',
@@ -46,6 +47,8 @@ export interface IRecipeCardProps {
 
 const RecipeCard = (props : IRecipeCardProps) : JSX.Element => {
 
+    const navigate = useNavigate();
+
     const onDeleteSuccess = useDisplaySuccessCallback('Success');
 
     const { recipe } = { ...props };
@@ -64,9 +67,14 @@ const RecipeCard = (props : IRecipeCardProps) : JSX.Element => {
         onDeleteSuccess('Recipe deleted successfully');
     };
 
+    const goToRecipe = (e : React.MouseEvent<HTMLDivElement, MouseEvent>) : void => {
+        const recipeId = Number(e.currentTarget.id);
+        navigate(`/recipe/${recipeId}`);
+    };
+
     return (
 
-        <StyledBox className={'fdc'}>
+        <StyledBox className={'fdc'} id={`${recipe.id}`} onClick={goToRecipe}>
             <div className={'fdr jcsb'}>
                 <Typography variant={'bold'} fontSize={22}>{recipe.name}</Typography>
                 {

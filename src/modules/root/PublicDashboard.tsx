@@ -35,7 +35,6 @@ const StyledBox = styled(Box)(({ theme }) => ({
 }));
 
 const PublicDashboard = () : JSX.Element => {
-
     const [searchText, setSearchText] = useState<string | null>(null);
     const [selectedDietaryTagIds, setSelectedDietaryTagIds] = useState<Array<number>>([]);
     const [showEdit, setShowEdit] = useState<boolean>(false);
@@ -97,7 +96,10 @@ const PublicDashboard = () : JSX.Element => {
                 recipe={selectedRecipe}
             />
             {
-                isLoadingRecipes ? <CircularProgress color={'secondary'} /> :
+                isLoadingRecipes ?
+                    <div className='wfill hfill fdc aic jcc'>
+                        <CircularProgress color={'secondary'} />
+                    </div> :
                     <StyledBox className={'fdc aic jcc pb20'}>
                         <div className={'fdr aic jcc flx1 wfill mt20 mb20'}>
                             <DebouncedSearchInput
